@@ -12,20 +12,32 @@ class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
         // brute force approach
-        ListNode* temp = head;
-        stack<int> st;
-        while(temp != NULL){
-            st.push(temp->val);
-            temp = temp->next;
-        }
+        // ListNode* temp = head;
+        // stack<int> st;
+        // while(temp != NULL){
+        //     st.push(temp->val);
+        //     temp = temp->next;
+        // }
 
-        temp=head;
-        while(!st.empty()){
-            int ele=st.top();
-            st.pop();
-            temp->val=ele;
-            temp=temp->next;
+        // temp=head;
+        // while(!st.empty()){
+        //     int ele=st.top();
+        //     st.pop();
+        //     temp->val=ele;
+        //     temp=temp->next;
+        // }
+        // return head;
+
+        ListNode* temp = head;
+        ListNode* forw = head;
+        ListNode* prev = NULL;
+
+        while(forw !=NULL){
+            forw = forw->next;
+            temp->next = prev;
+            prev=temp;
+            temp=forw;
         }
-        return head;
+        return prev;
     }
 };
