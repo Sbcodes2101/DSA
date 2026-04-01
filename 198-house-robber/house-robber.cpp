@@ -14,7 +14,7 @@ public:
 
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp(n,-1);
+        // vector<int> dp(n,-1);
         // return f(n-1,nums,dp); memoization
         // tabulation
         // dp[0] = nums[0];
