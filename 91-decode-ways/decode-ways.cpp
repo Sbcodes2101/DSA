@@ -4,22 +4,18 @@ public:
         if (idx==s.size()){
             return 1;
         }
-
         if(s[idx]=='0') return 0;
-
         if(dp[idx]!=-1) return dp[idx];
-
-        int result = f(idx+1,s,dp);
-
+        int only_one_char = f(idx+1,s,dp);
+        int only_two_char = 0;
         if(idx+1<s.size())
         {
             if(s[idx]=='1' || (s[idx]=='2' && s[idx+1]<='6'))
             {
-            result += f(idx+2,s,dp);
+            only_two_char += f(idx+2,s,dp);
             }
         } 
-
-        return dp[idx] = result;
+        return dp[idx] = only_one_char+only_two_char;
     }
 
     int numDecodings(string s) {
