@@ -8,6 +8,9 @@ public:
         while(hi>=lo){
             int mid = lo+(hi-lo)/2;
             
+            // pivot point will always be on the non sorted half
+            // left half is sorted therefore we pick the minimum
+            // from the sorted half and move towards right
             if(nums[mid]>=nums[lo]){
                 ans = min(ans,nums[lo]);
                 lo = mid+1;
