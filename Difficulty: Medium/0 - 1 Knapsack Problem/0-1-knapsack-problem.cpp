@@ -21,10 +21,32 @@ class Solution {
         return dp[W][idx]=max(pick,not_pick);
     }
     
-    int knapsack(int W, vector<int> &val, vector<int> &wt) {
-        // code here
-        int n = val.size();
-        vector<vector<int>> dp(W+1,vector<int>(n+1,-1));
-        return f(W,val,wt,n-1,dp);
+   int knapsack(int W, vector<int> &val, vector<int> &wt) {
+    int n = val.size();
+    
+    vector<int> prev(W+1,0),curr(W+1,0);
+
+    // Base case
+    for(int w = wt[0]; w <= W; w++) {
+        prev[w] = val[0];
     }
+
+    for(int idx = 1; idx < n; idx++) {
+        for(int w = 0; w <= W; w++) {
+            int not_pick = prev[w];
+            
+            int pick = INT_MIN;
+            if(w - wt[idx] >= 0) {
+                pick = val[idx] + prev[w - wt[idx]];
+            }
+
+            curr[w] = max(pick, not_pick);
+        }
+        
+        prev=curr;
+    }
+    
+
+    return prev[W];
+}
 };
