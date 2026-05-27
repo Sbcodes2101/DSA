@@ -17,9 +17,9 @@ public:
     TreeNode* curr = root;
         
         while(curr!=NULL || !st.empty()){
-            if(curr!=NULL){ 
+            if(curr!=NULL){
                 st.push(curr);
-                curr=curr->left;
+                curr = curr->left;
             }
 
             else{
@@ -27,10 +27,9 @@ public:
                 st.pop();
 
                 ans.push_back(curr->val);
-                curr=curr->right;
+                curr = curr->right;
             }
         }
-
         return ans;
     }
 };
