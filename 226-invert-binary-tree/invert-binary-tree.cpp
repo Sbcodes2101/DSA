@@ -12,12 +12,12 @@
 class Solution {
 public:
     void helper(TreeNode* root){
-        if(root==NULL) return;
+        if(root == NULL) return;
         TreeNode* temp = root->left;
         root->left = root->right;
         root->right = temp;
-        helper(root->left);
-        helper(root->right);
+        if(root->left != NULL) helper(root->left);
+        if(root->right != NULL) helper(root->right);
         return;
     }
 
