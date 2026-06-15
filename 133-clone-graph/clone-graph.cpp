@@ -22,24 +22,24 @@ public:
 class Solution {
 public:
     unordered_map<Node*,Node*> mp;
-
     Node* cloneGraph(Node* node) {
         if(node==NULL) return NULL;
-        Node* cloneNode = new Node(node->val);
+        Node* clone = new Node(node->val);
         queue<Node*> q;
         q.push(node);
-        mp[node] = cloneNode;
+        mp[node] = clone;
 
         while(!q.empty()){
             Node* curr = q.front();
             q.pop();
 
-            for(Node* neighbor: curr->neighbors){
+            for(Node* neighbor:curr->neighbors){
                 if(mp.find(neighbor)==mp.end()){
-                    Node* newnode = new Node(neighbor->val);
-                    mp[neighbor] = newnode;
+                    Node* newNode = new Node(neighbor->val);
+                    mp[neighbor] = newNode;
                     q.push(neighbor);
                 }
+
                 mp[curr]->neighbors.push_back(mp[neighbor]);
             }
         }
