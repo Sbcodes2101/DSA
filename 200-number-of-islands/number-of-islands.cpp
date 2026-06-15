@@ -15,10 +15,10 @@ public:
 
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(grid[i][j] == '1'){
+                if(grid[i][j] == '1' && !visited[i][j]){
                     ans++;
                     q.push({i,j});
-                    grid[i][j] = '0';
+                    visited[i][j] = 1;
                     while(!q.empty()){
                         int r = q.front().first;
                         int c = q.front().second;
@@ -28,11 +28,10 @@ public:
                             int nr = r + rows[i];
                             int nc = c + col[i];
 
-                            if(isVald(nr,nc) && grid[nr][nc]=='1'){
-                                grid[nr][nc] = '0';
+                            if(isVald(nr,nc) && !visited[nr][nc] && grid[nr][nc] == '1'){
+                                visited[nr][nc] = 1;
                                 q.push({nr,nc});
                             }
-
                         }
                     }
                 }
