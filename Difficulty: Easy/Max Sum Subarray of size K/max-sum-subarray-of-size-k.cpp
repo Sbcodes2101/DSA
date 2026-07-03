@@ -1,25 +1,40 @@
 class Solution {
   public:
     int maxSubarraySum(vector<int>& arr, int k) {
+        // code here
+        // int n = arr.size();
+        // int ans = INT_MIN;
+        
+        // for(int i=0;i<=n-k;i++){
+        //     int sum=0;
+        //     for(int j=i;j<i+k;j++){
+        //         sum = sum+arr[j];
+        //     }
+        //     ans = max(ans,sum);
+        // }
+        
+        // return ans;
+        
         int n = arr.size();
+        int ans = 0;
         int sum=0;
-        int maxSum=INT_MIN;
-        int l=0;
-        int r=0;
-        while(r<n){
-            int len = r-l+1;
-            while(len>k){
-                sum -= arr[l];
-                l++;
-                len=r-l+1;
-            }
-            
-            sum += arr[r];
-            maxSum = max(maxSum,sum);
-            r++;
+        int j=0;
+        int i=0;
+        
+        for(j=0;j<k;j++){
+            sum += arr[j];
         }
         
-        return maxSum;
+        ans = max(ans,sum);
+        
+        while(j<n){
+            sum += arr[j];
+            sum -= arr[i];
+            i++;
+            j++;
+            ans = max(ans,sum);
+        }
+        
+        return ans;
     }
-    
 };
