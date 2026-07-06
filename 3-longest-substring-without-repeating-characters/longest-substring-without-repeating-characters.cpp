@@ -19,22 +19,43 @@ public:
 
         // return maxi;
 
+        // int n=s.size();
+        // int ans = INT_MIN;
+        // int i=0;
+        // int j=0;
+        // unordered_set<int> st;
+
+        // while(j<n){
+        //     if(st.find(s[j])!=st.end()){
+        //         while(st.find(s[j])!=st.end()){
+        //             st.erase(s[i]);
+        //             i++;
+        //         }
+        //     }
+
+        //     st.insert(s[j]);
+        //     ans = max(ans,j-i+1);
+        //     j++;
+        // }
+
+        // return (ans==INT_MIN)? 0:ans;
+
+
         int n=s.size();
         int ans = INT_MIN;
         int i=0;
         int j=0;
-        unordered_set<int> st;
+        unordered_map<char,int> st;
 
         while(j<n){
             if(st.find(s[j])!=st.end()){
-                while(st.find(s[j])!=st.end()){
-                    st.erase(s[i]);
-                    i++;
+                if(st[s[j]]>=i){
+                i = st[s[j]]+1;
                 }
             }
 
-            st.insert(s[j]);
             ans = max(ans,j-i+1);
+            st[s[j]] = j;
             j++;
         }
 
