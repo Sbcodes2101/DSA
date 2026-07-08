@@ -1,33 +1,17 @@
 class Solution {
 public:
-    int f(vector<int> &nums,int idx,vector<int> &dp){
-        if(idx==0) return nums[idx];
-        if(idx<0) return 0;
+    int maximumhouseRob(vector<int> &nums,int i,vector<int> &dp){
+        if(i==0) return nums[0];
 
-        if(dp[idx]!=-1) return dp[idx];
+        if(dp[i]!=-1) return dp[i];
 
-        int pick = nums[idx]+f(nums,idx-2,dp);
-        int not_pick = f(nums,idx-1,dp);
+        if(i==1) return max(nums[0],nums[1]);
 
-        return dp[idx]=max(pick,not_pick);
+        return dp[i] = max(nums[i]+maximumhouseRob(nums,i-2,dp),maximumhouseRob(nums,i-1,dp));
     }
-
     int rob(vector<int>& nums) {
         int n = nums.size();
-        // return f(nums,n-1,dp);
-        int prev2 = 0;
-        int prev = nums[0];
-        int curr;
-        if(nums.size()==1) return nums[0];
-        for(int i=1;i<n;i++){
-            int pick = nums[i];
-            if(i>1) pick+=prev2;
-            int not_pick = prev;
-
-            curr = max(pick,not_pick);
-            prev2 = prev;
-            prev = curr;
-        }
-        return curr;
+        vector<int> dp(n,-1);
+        return maximumhouseRob(nums,n-1,dp);
     }
 };
