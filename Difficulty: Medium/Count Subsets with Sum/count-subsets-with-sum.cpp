@@ -18,18 +18,21 @@ class Solution {
     
     int perfectSum(vector<int>& arr, int target) {
         int n = arr.size();
-        vector<vector<int>> dp(n,vector<int> (target+1,0));
+        // vector<vector<int>> dp(n,vector<int> (target+1,0));
+        vector<int> prev(target+1,0);
         
-        dp[0][0] = 1;
-        if(arr[0]<=target) dp[0][arr[0]]++;
+        prev[0] = 1;
+        if(arr[0]<=target) prev[arr[0]]++;
         
         for(int i=1;i<n;i++){
+            vector<int> curr(target+1,0);
             for(int j=0;j<=target;j++){
-                if(j>=arr[i]) dp[i][j] = dp[i-1][j]+dp[i-1][j-arr[i]];
-                else dp[i][j] = dp[i-1][j];
+                if(j>=arr[i]) curr[j] = prev[j]+prev[j-arr[i]];
+                else curr[j] = prev[j];
             }
+            prev=curr;
         }
         
-        return dp[n-1][target];
+        return prev[target];
     }
 };
