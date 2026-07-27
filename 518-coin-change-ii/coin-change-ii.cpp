@@ -26,19 +26,17 @@ public:
         //     dp[i][0] = 1;
         // }
 
-        vector<double> prev(amount+1,0);
-        prev[0] = 1;
+        vector<double> curr(amount+1,0);
+        curr[0] = 1;
 
         for(double i=1;i<=n;i++){
-            vector<double> curr(amount+1,0);
-            curr[0]=1;
-            for(double j=1;j<=amount;j++){
-                if(j-coins[i-1]>=0) curr[j] = prev[j]+curr[j-coins[i-1]];
-                else curr[j] = prev[j];
+            // vector<double> curr(amount+1,0);
+            // curr[0]=1;
+            for(double j=0;j<=amount;j++){
+                if(j-coins[i-1]>=0) curr[j] = curr[j]+curr[j-coins[i-1]];
             }
-            prev = curr;
         }
 
-        return prev[amount];
+        return curr[amount];
     }
 };
