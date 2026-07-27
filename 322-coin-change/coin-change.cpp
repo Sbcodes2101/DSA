@@ -13,28 +13,46 @@ public:
     }
 
     int coinChange(vector<int>& coins, int amount) {
+        // int n = coins.size();
+        // vector<vector<int>> dp(n+1,vector<int> (amount+1,0));
+        // // int ans = f(coins,amount,n,dp);
+        // // return (ans==1e9)? -1:ans;
+
+        // for(int i=0;i<=n;i++){
+        //     dp[i][0] = 0;
+        // }
+
+        // for(int i=0;i<=amount;i++){
+        //     dp[0][i] = 1e9;
+        // }
+
+        // for(int i=1;i<=n;i++){
+        //     for(int j=1;j<=amount;j++){
+        //         int pick=1e9;
+        //         if(j-coins[i-1]>=0) pick = 1+dp[i][j-coins[i-1]];
+        //         int not_pick = dp[i-1][j];
+        //         dp[i][j] = min(pick,not_pick);
+        //     }
+        // }
+
+        // return (dp[n][amount]==1e9)? -1:dp[n][amount];
+
         int n = coins.size();
-        vector<vector<int>> dp(n+1,vector<int> (amount+1,0));
-        // int ans = f(coins,amount,n,dp);
-        // return (ans==1e9)? -1:ans;
+        vector<int> prev(amount+1,1e9);
 
-        for(int i=0;i<=n;i++){
-            dp[i][0] = 0;
-        }
-
-        for(int i=0;i<=amount;i++){
-            dp[0][i] = 1e9;
-        }
+        prev[0] = 0;
 
         for(int i=1;i<=n;i++){
+            vector<int> curr(amount+1,0);
             for(int j=1;j<=amount;j++){
-                int pick=1e9;
-                if(j-coins[i-1]>=0) pick = 1+dp[i][j-coins[i-1]];
-                int not_pick = dp[i-1][j];
-                dp[i][j] = min(pick,not_pick);
+                int pick = 1e9;
+                if(j-coins[i-1]>=0) pick = 1+curr[j-coins[i-1]];
+                int not_pick = prev[j];
+                curr[j] = min(pick,not_pick);
             }
+            prev = curr;
         }
 
-        return (dp[n][amount]==1e9)? -1:dp[n][amount];
+        return (prev[amount]==1e9)? -1:prev[amount];
     }
 };
