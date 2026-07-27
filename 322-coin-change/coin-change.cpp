@@ -38,21 +38,19 @@ public:
         // return (dp[n][amount]==1e9)? -1:dp[n][amount];
 
         int n = coins.size();
-        vector<int> prev(amount+1,1e9);
+        vector<int> curr(amount+1,1e9);
 
-        prev[0] = 0;
+        curr[0] = 0;
 
         for(int i=1;i<=n;i++){
-            vector<int> curr(amount+1,0);
             for(int j=1;j<=amount;j++){
                 int pick = 1e9;
                 if(j-coins[i-1]>=0) pick = 1+curr[j-coins[i-1]];
-                int not_pick = prev[j];
+                int not_pick = curr[j];
                 curr[j] = min(pick,not_pick);
             }
-            prev = curr;
         }
 
-        return (prev[amount]==1e9)? -1:prev[amount];
+        return (curr[amount]==1e9)? -1:curr[amount];
     }
 };
