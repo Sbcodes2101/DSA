@@ -1,29 +1,21 @@
 class Solution {
 public:
-    int f(vector<int> &coins,int target,int idx,vector<vector<int>> &dp){
-        if(target==0) return 0;
-
-        if(idx<0) return INT_MAX;
-
-        if(dp[idx][target]!=-1) return dp[idx][target];
-
-
-        int pick = INT_MAX;
-        if (target >= coins[idx]) {
-            int res = f(coins, target - coins[idx], idx,dp);
-            if (res != INT_MAX)
-            pick = 1 + res;
+    int f(vector<int> &coins,int amount,int idx,vector<vector<int>> &dp){
+        if(amount==0){
+            return 0;
         }
 
-        int not_pick = f(coins,target,idx-1,dp);
+        if(idx==0 || amount<0) return 1e9;
 
-        return dp[idx][target] = min(pick,not_pick);
+        if(dp[idx][amount]!=-1) return dp[idx][amount];
+
+        return dp[idx][amount] = min(f(coins,amount,idx-1,dp),1+f(coins,amount-coins[idx-1],idx,dp));
     }
 
     int coinChange(vector<int>& coins, int amount) {
-       int n = coins.size();
-       vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
-       int ans = f(coins,amount,n-1,dp);
-       return (ans==INT_MAX)? -1:ans;
+        int n = coins.size();
+        vector<vector<int>> dp(n+1,vector<int> (amount+1,-1));
+        int ans = f(coins,amount,n,dp);
+        return (ans==1e9)? -1:ans;
     }
 };
