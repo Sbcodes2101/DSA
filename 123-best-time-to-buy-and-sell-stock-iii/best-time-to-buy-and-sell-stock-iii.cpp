@@ -26,7 +26,22 @@ public:
         int n = prices.size();
         bool buy = true;
 
-        vector<vector<vector<int>>> dp(n,vector<vector<int>> (2,vector<int> (3,-1)));
-        return f(0,prices,buy,2,dp);
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>> (2,vector<int> (3,0)));
+        // return f(0,prices,buy,2,dp);
+
+        for(int i=n-1;i>=0;i--){
+            for(int j=0;j<=1;j++){
+                for(int k=1;k<=2;k++){
+                    if(j==1){
+                        dp[i][j][k] = max(-prices[i] + dp[i+1][0][k],dp[i+1][1][k]);
+                    }
+                    else{
+                        dp[i][j][k] = max(prices[i] + dp[i+1][1][k-1],dp[i+1][0][k]);
+                    }
+                }
+            }
+        }
+
+        return dp[0][1][2];
     }
 };
