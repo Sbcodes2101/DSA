@@ -9,8 +9,18 @@ public:
 
         for(int i=0;i<n;i++){
             string ele = strs[i];
-            sort(ele.begin(),ele.end());
-            mp[ele].push_back(strs[i]);
+            vector<int> count(26,0);
+
+            for(int j=0;j<ele.size();j++){
+                count[ele[j]-'a']++;
+            }
+
+            string key = "";
+            for(int k=0;k<26;k++){
+                key += to_string(count[k])+'*';
+            }
+
+            mp[key].push_back(strs[i]);
         }
 
         for(auto& pair:mp){
