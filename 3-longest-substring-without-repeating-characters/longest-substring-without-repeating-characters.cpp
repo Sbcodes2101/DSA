@@ -8,9 +8,8 @@ public:
 
         while(j<n){
             if(mp.find(s[j])!=mp.end()){
-                while(mp.find(s[j])!=mp.end()){
-                mp.erase(s[i]);
-                i++;
+                if(mp[s[j]]>=i){
+                    i = mp[s[j]]+1;
                 }
             }
 
