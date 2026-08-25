@@ -32,21 +32,40 @@ public:
         sort(words.begin(), words.end(), [](const string& a, const string& b) {
             return a.size() < b.size();
         });
-        vector<int> LSC(n, 1);
-        int ans = 1;
 
-        for (int i = 1; i < words.size(); i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if(words[j].size()+1==words[i].size()){
-                    if (helper(words[j], words[i], 0, 0) && LSC[i] < LSC[j] + 1) {
-                    LSC[i] = 1 + LSC[j];
-                }
+        // vector<int> LSC(n, 1);
+        // int ans = 1;
+
+        // for (int i = 1; i < words.size(); i++) {
+        //     for (int j = i - 1; j >= 0; j--) {
+        //         if(words[j].size()+1==words[i].size()){
+        //             if (helper(words[j], words[i], 0, 0) && LSC[i] < LSC[j] + 1) {
+        //             LSC[i] = 1 + LSC[j];
+        //         }
+        //         }
+        //     }
+
+        //     ans = max(ans, LSC[i]);
+        // }
+
+        // return ans;
+
+        unordered_map<string,int> dp;
+        int maxLen = 1;
+
+        for(auto w:words){
+            dp[w] = 1;
+            for(int i=0;i<w.size();i++){
+                string str = w.substr(0,i)+w.substr(i+1);
+
+                if(dp.find(str)!=dp.end()){
+                    dp[w] = max(dp[w],1+dp[str]);
                 }
             }
 
-            ans = max(ans, LSC[i]);
+            maxLen = max(maxLen,dp[w]);
         }
 
-        return ans;
+        return maxLen;
     }
 };
