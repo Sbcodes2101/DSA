@@ -4,27 +4,24 @@ public:
         vector<int> ans;
         deque<int> q;
 
-        int i=0;
-        int j=0;
-
+        int i=0;int j=0;
         while(j<nums.size()){
-           while(!q.empty() && nums[j]>nums[q.back()]){
-            q.pop_back();
+            while(!q.empty() && nums[j]>nums[q.back()]){
+                q.pop_back();
             }
 
             q.push_back(j);
 
-           
             if(i>q.front()){
                 q.pop_front();
             }
+
+            if(j-i+1==k){
+                ans.push_back(nums[q.front()]);
+                i++;
+            }
            
-           if(j-i+1==k){
-            ans.push_back(nums[q.front()]);
-            i++;
-           }
-           
-           j++;
+            j++;
         }
 
         return ans;
