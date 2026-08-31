@@ -1,7 +1,7 @@
 class Solution {
 public:
     int f(vector<int> &scale,int left,int right,vector<vector<int>> &dp){
-        if(left+1>=right) return 0;
+        if(left+1==right) return 0;
 
         if(dp[left][right]!=-1) return dp[left][right];
 
