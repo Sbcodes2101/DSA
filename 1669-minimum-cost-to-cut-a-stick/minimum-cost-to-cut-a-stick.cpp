@@ -29,6 +29,7 @@ public:
         scale.push_back(n);
 
         vector<vector<int>> dp(scale.size(),vector<int> (scale.size(),-1));
+        
         return f(scale,0,scale.size()-1,dp);
     }
 };
