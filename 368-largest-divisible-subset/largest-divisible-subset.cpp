@@ -8,8 +8,8 @@ public:
         vector<int> ans;
         sort(nums.begin(),nums.end());
 
-        int maxlen = INT_MIN;
-        int idx=-1;
+        int maxlen = 1;
+        int idx= 0;
         for(int i=1;i<n;i++){
             for(int j=i-1;j>=0;j--){
                 if(nums[i]%nums[j]==0 && LDS[i]<1+LDS[j]){
