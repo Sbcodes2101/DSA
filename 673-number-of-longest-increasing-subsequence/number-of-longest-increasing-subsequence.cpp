@@ -5,17 +5,15 @@ public:
         vector<int> LIS(n,1);
         vector<int> count(n,1);
 
-        int maxLen =1;
+        int maxLen = 1;
         for(int i=1;i<n;i++){
-            for(int j=0;j<i;j++){
+            for(int j=i-1;j>=0;j--){
                 if(nums[i]>nums[j]){
-
                     if(LIS[i]<LIS[j]+1){
-                        LIS[i]=LIS[j]+1;
+                        LIS[i] = LIS[j]+1;
                         count[i] = count[j];
                     }
-
-                    else if(LIS[i]==1+LIS[j]){
+                    else if(LIS[i]==LIS[j]+1){
                         count[i] += count[j];
                     }
                 }
@@ -32,6 +30,7 @@ public:
                 ans += count[i];
             }
         }
+
         return ans;
     }
 };
