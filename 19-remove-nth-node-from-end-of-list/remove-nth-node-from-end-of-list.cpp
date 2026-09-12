@@ -11,47 +11,26 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        // brute force approach
-        // ListNode* temp=head;
-        // int len=0;
-        // if(head==NULL || head->next==NULL) return NULL;
-        // while(temp != NULL){
-        //     temp = temp->next;
-        //      len++;
-        // }
-
-        // if (n == len) {
-        //     ListNode* newHead = head->next;
-        //     delete head;
-        //     return newHead;
-        // }
-
-        // temp=head;
-        // int steps = len-n-1;
-        // while(steps != 0){
-        //     temp=temp->next;
-        //     steps--;
-        // }
-
-        // temp->next = temp->next->next;
-        // return head;
-
-        // optimal approach using slow and fast
-        ListNode* fast = head;
+        if(head==NULL) return head;
         ListNode* slow = head;
+        ListNode* fast = head;
+        int steps = n;
 
-        for(int i=0;i<n;i++){
+        while(steps--){
             fast = fast->next;
         }
 
-        if(fast == NULL) return head->next;
+        if(fast==NULL) {
+            return head->next;
+        }
 
-        while(fast->next != NULL){
-            fast = fast->next;
-            slow = slow->next;
+        while(fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next;
         }
 
         slow->next = slow->next->next;
+
         return head;
     }
 };
