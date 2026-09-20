@@ -4,17 +4,21 @@ public:
         sort(intervals.begin(),intervals.end());
         int n = intervals.size();
         int ans = 0;
-        int prev_end = intervals[0][1];
-        
+        int cs = intervals[0][0];
+        int ce = intervals[0][1];
+
         for(int i=1;i<n;i++){
-            if(intervals[i][0]<prev_end){
+            int ns = intervals[i][0];
+            int ne = intervals[i][1];
+
+            if(ce>ns){ //overlap
                 ans++;
-                prev_end = min(intervals[i][1],prev_end);
+                ce = min(ce,ne);
             }
             else{
-                prev_end = intervals[i][1];
+                ce = ne;
             }
-        }  
+        }
 
         return ans;
     }
