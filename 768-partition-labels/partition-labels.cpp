@@ -9,7 +9,7 @@ public:
             mp[s[i]] = i;
         }
         
-        int last_index=mp[s[0]];
+        int last_index=0;
         int start = 0;
 
         for(int i=0;i<n;i++){
@@ -17,7 +17,6 @@ public:
 
             if(i==last_index){
                 ans.push_back(i-start+1);
-                last_index = mp[s[i+1]];
                 start = i+1;
             }
         }
