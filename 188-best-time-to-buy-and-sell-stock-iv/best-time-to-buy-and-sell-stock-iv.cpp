@@ -1,25 +1,28 @@
 class Solution {
 public:
-    int maxProfit(int transaction, vector<int>& prices) {
-        int n = prices.size();
+    int f(int idx,int no_of_transactions,vector<int> &prices,bool buy,vector<vector<vector<int>>> &dp){
+        if(idx==prices.size()) return 0;
 
-        vector<vector<int>> prev(2,vector<int> (transaction+1,0));
+        if(no_of_transactions==0) return 0;
 
-        for(int i=n-1;i>=0;i--){
-            vector<vector<int>> curr(2,vector<int> (transaction+1,0));
-            for(int j=0;j<=1;j++){
-                for(int k=1;k<=transaction;k++){
-                    if(j==1){
-                        curr[j][k] = max(-prices[i] + prev[0][k],prev[1][k]);
-                    }
-                    else{
-                        curr[j][k] = max(prices[i] + prev[1][k-1],prev[0][k]);
-                    }
-                }
-            }
-            prev = curr;
+        if(dp[idx][no_of_transactions][buy]!=-1) return dp[idx][no_of_transactions][buy];
+
+        int ans = INT_MIN;
+        if(buy){
+            ans = max(-prices[idx]+f(idx+1,no_of_transactions,prices,false,dp),f(idx+1,no_of_transactions,prices,true,dp));
         }
 
-        return prev[1][transaction];
+        else{
+            ans = max(prices[idx]+f(idx+1,no_of_transactions-1,prices,true,dp),f(idx+1,no_of_transactions,prices,false,dp));
+        }
+
+        return dp[idx][no_of_transactions][buy] = ans;
+    }
+
+    int maxProfit(int k, vector<int>& prices) {
+        int n = prices.size();
+        bool buy = true;
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>> (k+1,vector<int> (2,-1)));
+        return f(0,k,prices,buy,dp);
     }
 };
