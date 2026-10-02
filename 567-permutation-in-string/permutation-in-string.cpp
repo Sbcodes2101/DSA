@@ -1,45 +1,41 @@
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
-        int n1 = s1.length();
-        int n2 = s2.length();
+        int n1 = s1.size();
+        int n2 = s2.size();
         if(n1>n2) return false;
-        int hash[26] = {0};
+
+        vector<int> hash(26,0);
 
         for(int i=0;i<n1;i++){
             hash[s1[i]-'a']++;
         }
 
-        int left = 0;
-        int right = 0;
-        bool check=true;
+        int i=0;
+        int j=0;
 
-        while(right<n2){
-            check = true;
-            hash[s2[right]-'a']--;
+        while(j<n2){
+            hash[s2[j]-'a']--;
 
-            while(right-left+1>n1){
-                hash[s2[left]-'a']++;
-                left++;
+            if(j-i+1>n1){
+                hash[s2[i]-'a']++;
+                i++;
             }
-            
 
-            if(right-left+1==n1){
+            if(j-i+1==n1){
+                bool flag = true;
                 for(int i=0;i<26;i++){
                     if(hash[i]!=0){
-                        check = false;
+                        flag=false;
                         break;
                     }
-                    else{
-                        check=true;
-                    }
                 }
-                if(check==true) return true;
+                if(flag==true) return true;
             }
 
-            right++;
+            j++;
         }
 
-        return check;
+        return false;
     }
 };
