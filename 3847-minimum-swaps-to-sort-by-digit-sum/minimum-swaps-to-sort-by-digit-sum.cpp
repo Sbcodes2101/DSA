@@ -24,20 +24,21 @@ public:
         sort(sortedlist.begin(), sortedlist.end());
 
         for (int i = 0; i < n; i++) {
-            int window_size = 0;
-            int curr_idx = i;
-
-            if (visited[i] || sortedlist[i][2] == i)
+            if(visited[i] || sortedlist[i][2]==i){
                 continue;
-
-            while (!visited[curr_idx]) {
-                visited[curr_idx] = true;
-                curr_idx = sortedlist[curr_idx][2];
-                window_size++;
             }
 
-            if (window_size > 0) {
-                count += window_size - 1;
+            int curr_idx = i;
+            int windowsize = 0;
+            
+            while(!visited[curr_idx]){
+                visited[curr_idx] = true;
+                curr_idx = sortedlist[curr_idx][2];
+                windowsize++;
+            }
+
+            if(windowsize>0){
+                count += windowsize-1;
             }
         }
 
