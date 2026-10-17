@@ -1,47 +1,43 @@
 class Solution {
 public:
-    int digitSum(int number){
-        int sum = 0;
-        while(number>0){
-            int n = number%10;
-            sum += n;
-            number = number/10;
+    int digitsum(int number) {
+        int ans = 0;
+        while (number > 0) {
+            int n = number % 10;
+            ans += n;
+            number = number / 10;
         }
-        return sum;
+        return ans;
     }
 
     int minSwaps(vector<int>& nums) {
         int n = nums.size();
+        vector<bool> visited(n, false);
+        vector<vector<int>> sortedlist;
         int count = 0;
-        vector<vector<int>> sortedmaplist;
-        unordered_map<int,int> mp;
 
-        for(int i=0;i<n;i++){
-            mp[nums[i]] = i;
+        for (int i = 0; i < n; i++) {
+            int sum = digitsum(nums[i]);
+            sortedlist.push_back({sum, nums[i], i});
         }
 
-        for(int i=0;i<n;i++){
-            int sum = digitSum(nums[i]);
-            sortedmaplist.push_back({sum,nums[i],i});
-        }
+        sort(sortedlist.begin(), sortedlist.end());
 
-        sort(sortedmaplist.begin(),sortedmaplist.end());
+        for (int i = 0; i < n; i++) {
+            int window_size = 0;
+            int curr_idx = i;
 
-        int i = 0;
-        while(i<sortedmaplist.size()){
-            int ele = sortedmaplist[i][1];
-            
-            if(mp[ele] == i){
-                i++;
+            if (visited[i] || sortedlist[i][2] == i)
+                continue;
+
+            while (!visited[curr_idx]) {
+                visited[curr_idx] = true;
+                curr_idx = sortedlist[curr_idx][2];
+                window_size++;
             }
-            
 
-            else{
-                int curr_idx = mp[ele];
-                swap(nums[i],nums[curr_idx]);
-                mp[nums[curr_idx]] = curr_idx;
-                mp[nums[i]] = i;
-                count++;
+            if (window_size > 0) {
+                count += window_size - 1;
             }
         }
 
